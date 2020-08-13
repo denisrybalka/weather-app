@@ -1,21 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import {Text, StyleSheet, ScrollView, Image, StatusBar} from "react-native";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import Header from './src/screens/Header.js';
+import Main from './src/screens/Main.js';
+import Info from './src/screens/Info.js';
+import Weather from './src/screens/Weather.js';
+
+import Constants from 'expo-constants'
+
+class App extends React.Component {
+  render() {
+    return (
+    <ScrollView style={styles.container}>
+      <StatusBar backgroundColor='#BFF0A8' barStyle='light-content'/>
+      <Header/>
+      <Main/>
+      <Info/>
+      <Weather/>
+    </ScrollView>
+    )
+  }
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'white',
   },
 });
+
+export default App;
