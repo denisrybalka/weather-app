@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import { Modal, TouchableOpacity, View, Text, Image, StyleSheet,TextInput,StatusBar } from 'react-native'
+import React,{useState,useEffect} from 'react';
+import { Modal, TouchableOpacity, View, Text, Image, StyleSheet,TextInput,StatusBar,BackHandler,Alert } from 'react-native'
 import CityList from './CityList.js';
 
 
@@ -7,6 +7,7 @@ const Header = ({weather}) => {
 	const [modal,setModal] = useState(false);
 	const [input,setInput] = useState('');
 	const [showInput, setShowInput] = useState(false);
+	console.log(input)
 
   return (
 	<View style={styles.header}>
@@ -23,28 +24,47 @@ const Header = ({weather}) => {
 		</View>
 		<Image style={styles.image} source={require('../img/cloud.png')}/>
 		<Image style={styles.background} source={require('../img/background.png')}/>
-		<Modal
-			visible={modal}
-			transparent
-			animationType='slide'
-		>	
+
+		<Modal visible={modal && !showInput} transparent animationType='slide' onRequestClose={() => setModal(false)}>	
 			<View style={{flex:1,backgroundColor:"rgba(77, 77, 77, 0.5)"}}>
 	      		<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
+
 				<TouchableOpacity style={styles.back} onPress={() => setModal(!modal)}>
 			  		<Image source={require('../img/back.png')}/>
 			  	</TouchableOpacity>
-			  	{!showInput ? <Text style={styles.modalText}>Управление городами</Text> :
-			  	<View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:20}}>
-			  		<TextInput style={styles.input} placeholder="Введите город" autoFocus/>
-				  	<TouchableOpacity style={{padding: 5,}} onPress={() => setShowInput(false)}>
-					  	<Text style={{color:'white'}}>Отмена</Text>
-				  	</TouchableOpacity>
-			  	</View>}
+
+			  	<Text style={styles.modalText}>Управление городами</Text>
 
 			  	<CityList weather={weather}/>
+
 			  	<TouchableOpacity style={styles.addCity} onPress={() => setShowInput(true)}>
 			  		<Image style={{}} source={require('../img/plus.png')}/>
 			  	</TouchableOpacity>
+
+			</View>
+		</Modal>
+
+		<Modal visible={showInput} transparent animationType='slide' onRequestClose={() => setShowInput(false)}>
+			<View style={{flex:1,backgroundColor:"rgba(77, 77, 77, 0.5)"}}>
+				<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
+
+			  	<View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:20}}>
+			  		<Image style={{marginRight:10}} source={require('../img/search.png')}/>
+
+			  		<TextInput
+			  			style={styles.input}
+			  			placeholder="Введите город"
+			  			autoFocus
+			  			value={input}
+			  			maxLength={20}
+			  			onChange={(e) => setInput(e.target.value)}
+			  		/>
+
+				  	<TouchableOpacity style={{padding: 5,}} onPress={() => setShowInput(false)}>
+					  	<Text style={{color:'white'}}>Отмена</Text>
+				  	</TouchableOpacity>
+			  	</View>
+
 			</View>
 		</Modal>
 

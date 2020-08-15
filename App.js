@@ -38,7 +38,6 @@ class App extends React.Component {
     await fetch('https://api.openweathermap.org/data/2.5/weather?q=Kiev&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09')
     .then(data => data.json())
       .then(results => {
-        console.log(results)
         this.setState({
           weather: {
             lat: results.coord.lat,
@@ -61,7 +60,6 @@ class App extends React.Component {
     await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.weather.lat}&lon=${this.state.weather.lon}&lang=ru&units=metric&exclude=minutely,hourly&appid=f937e142b7a3df602830e9a106d4df09`)
       .then(data => data.json())
       .then(results => {
-        console.log(results)
         const newWeather = results.daily.map(el => {
           return {
             temp: Math.ceil(el.temp.max),
@@ -70,7 +68,6 @@ class App extends React.Component {
             id: el.dt,
           }
         })
-        console.log(newWeather)
         this.setState(({weather}) => {
             return {
               weather: {
