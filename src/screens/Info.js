@@ -2,36 +2,36 @@ import React from 'react';
 import { View,Text,StyleSheet  } from 'react-native'
 import InfoItem from './InfoItem.js';
 
-const Info = (props) => {
+const Info = ({weather}) => {
   return (
     <View style={style.infoBlock}>
 
     	<InfoItem
     		path={require('../img/umbrella.png')}
     		label="Вероятность осадков"
-    		sign=", %  |"
-    		value=" 0"
+    		sign=", %  | "
+    		value={weather.humidity}
     	/>
 
     	<InfoItem
     		path={require('../img/humidity.png')}
     		label="Влажность"
-    		sign=", %  |"
-    		value=" 50"
+    		sign=", %  | "
+    		value={weather.humidity}
     	/>
 
     	<InfoItem
     		path={require('../img/windy.png')}
     		label="Ветер"
-    		sign=", м/c  |"
-    		value=" 5"
+    		sign=", м/c  | "
+    		value={weather.wind}
     	/>
 
     	<InfoItem
     		path={require('../img/foog.png')}
     		label="Давление"
-    		sign=", мм  |"
-    		value=" 757"
+    		sign=", мм  | "
+    		value={weather.pressure}
     	/>
 
     </View>

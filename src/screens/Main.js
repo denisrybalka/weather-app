@@ -1,23 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native'
 
-const Main = (props) => {
+const Main = ({weather}) => {
 
 	const date = new Date();
 	const month = ["Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сен", "Окт", "Ноя", "Дек"];
-  
+  	const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота','Воскресенье'];
   return (
     <View style={styles.main}>
-  		<Text style={styles.city}>Киев</Text>
-  		<Text style={styles.date}>{`Понедельник  |  ${month[date.getMonth()]} ${date.getDate()}  |  ${date.getHours()}:${date.getMinutes()}`}</Text>
-  		<Text style={styles.mainDegree}>25°</Text>
+  		<Text style={styles.city}>{weather.main.name}</Text>
+  		<Text style={styles.date}>{`${days[date.getDay()]}  |  ${month[date.getMonth()]} ${date.getDate()}  |  ${date.getHours()}:${date.getMinutes()}`}</Text>
+  		<Text style={styles.mainDegree}>{`${Math.ceil(weather.main.temp)}°`}</Text>
   		<View style={styles.tempBlock}>
   			<View>
-  				<Text style={styles.temp}>+19°</Text>
+  				<Text style={styles.temp}>{`+${Math.ceil(weather.main.temp_min)}°`}</Text>
   				<Text style={styles.tempAfter}>мин.</Text>
   			</View>
   			<View>
-	  			<Text style={styles.temp}>+25°</Text>
+	  			<Text style={styles.temp}>{`+${Math.ceil(weather.main.temp_max)}°`}</Text>
 	  			<Text style={styles.tempAfter}>макс.</Text>
   			</View>
   		</View>

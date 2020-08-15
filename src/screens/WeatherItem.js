@@ -7,7 +7,7 @@ const WeatherItem = ({image,date,desc,temp}) => {
     	<Image style={styles.image} source={image}/>
     	<Text style={styles.text}>{`${date} • `}</Text>
     	<Text style={styles.text}>{desc}</Text>
-    	<Text style={styles.temp}>{temp}</Text>
+    	<Text style={styles.temp}>{`${temp}°`}</Text>
     </View>
   )
 }

@@ -1,16 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View} from "react-native";
 
 import WeatherItem from './WeatherItem.js';
 
-const Weather = (props) => {
+const Weather = ({weather}) => {
+
+	const date = new Date();
+	let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ','ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ'];
+	let data = date.getDay();
+
+  const weatherItemsList = weather ? 
+  	weather.map((el,idx) => {
+  		if (idx < 5) {
+  			data++
+	  		return (
+				<WeatherItem
+		  			image={require('../img/cloudy.png')}
+		  			date={days[data]}
+		  			key={el.id}
+		  			desc={el.description}
+		  			temp={el.temp}
+		  		/>
+	  		)
+  		} else return null;
+  	}) : null;
+
   return (
     <View>
-    	<WeatherItem image={require('../img/cloudy.png')} date="Вт" desc="Пасмурно" temp="21°"/>
-    	<WeatherItem image={require('../img/clouds.png')} date="Ср" desc="Облачно" temp="25°"/>
-    	<WeatherItem image={require('../img/clouds.png')} date="Чт" desc="Облачно" temp="23°"/>
-    	<WeatherItem image={require('../img/sun.png')} date="Пт" desc="Ясно" temp="21°"/>
-    	<WeatherItem image={require('../img/rainy.png')} date="Сб" desc="Дождь" temp="19°"/>
+    	{weatherItemsList}
     </View>
   )
 }
