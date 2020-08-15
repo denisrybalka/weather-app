@@ -28,18 +28,31 @@ class App extends React.Component {
       },
       daily: [],
     },
+    cityList: [],
   }
 
   componentDidMount() {
     this.getWeather();
   }
 
+  addNewCity = (city) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        cityList: [...state.cityList, city],
+      }
+    })
+  }
+
   async getWeather() {
-    await fetch('https://api.openweathermap.org/data/2.5/weather?q=Kiev&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09')
+    await fetch('https://api.openweathermap.org/data/2.5/weather?q=Киев&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09')
     .then(data => data.json())
       .then(results => {
-        this.setState({
-          weather: {
+        this.setState((state) => {
+          return {
+            ...state,
+            weather: {
+            id: results.dt, 
             lat: results.coord.lat,
             lon: results.coord.lon,
             main: {
@@ -53,6 +66,8 @@ class App extends React.Component {
               temp_min: results.main.temp_min,
               wind: results.wind.speed,
             }
+          },
+          cityList: [results.name]
           }
         })
       })
@@ -84,7 +99,11 @@ class App extends React.Component {
     <ScrollView style={styles.container}>
       <StatusBar translucent backgroundColor='transparent'/>
       <View>
-        <Header weather={this.state.weather}/>
+        <Header
+          weather={this.state.weather}
+          cityList={this.state.cityList}
+          addNewCity={this.addNewCity}
+        />
         <Main weather={this.state.weather}/>
         <Info weather={this.state.weather.main}/>
         <Weather weather={this.state.weather.daily}/>

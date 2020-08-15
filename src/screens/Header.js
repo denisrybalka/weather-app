@@ -3,11 +3,33 @@ import { Modal, TouchableOpacity, View, Text, Image, StyleSheet,TextInput,Status
 import CityList from './CityList.js';
 
 
-const Header = ({weather}) => {
+const Header = ({weather,cityList,addNewCity}) => {
 	const [modal,setModal] = useState(false);
 	const [input,setInput] = useState('');
 	const [showInput, setShowInput] = useState(false);
-	console.log(input)
+	const [searchRes, setSearch] = useState({});
+	const [error,setError] = useState(false);
+
+	async function search(text) {
+		setInput(text);
+		await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${text}&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09`)
+    	.then(data => {
+	    	if (data.ok) {
+	    		return data.json()
+	    	} return 0;
+	    })
+	     .then(results => {
+     		if (results) {
+     			setError(false);
+     			setSearch({
+     				name: results.name,
+     				temp: Math.ceil(results.main.temp),
+     			})
+     		} else {
+     			setError(true);
+     		}
+	     });
+	}
 
   return (
 	<View style={styles.header}>
@@ -35,7 +57,7 @@ const Header = ({weather}) => {
 
 			  	<Text style={styles.modalText}>Управление городами</Text>
 
-			  	<CityList weather={weather}/>
+			  	<CityList weather={weather} cityList={cityList}/>
 
 			  	<TouchableOpacity style={styles.addCity} onPress={() => setShowInput(true)}>
 			  		<Image style={{}} source={require('../img/plus.png')}/>
@@ -45,7 +67,7 @@ const Header = ({weather}) => {
 		</Modal>
 
 		<Modal visible={showInput} transparent animationType='slide' onRequestClose={() => setShowInput(false)}>
-			<View style={{flex:1,backgroundColor:"rgba(77, 77, 77, 0.5)"}}>
+			<View style={{flex:1,backgroundColor:"rgba(77, 77, 77, 0.5)",alignItems:'center'}}>
 				<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
 
 			  	<View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:20}}>
@@ -57,14 +79,18 @@ const Header = ({weather}) => {
 			  			autoFocus
 			  			value={input}
 			  			maxLength={20}
-			  			onChange={(e) => setInput(e.target.value)}
+			  			onChangeText={(text) => search(text)}
 			  		/>
 
-				  	<TouchableOpacity style={{padding: 5,}} onPress={() => setShowInput(false)}>
+				  	<TouchableOpacity style={{padding: 5,}} onPress={() => setInput('')}>
 					  	<Text style={{color:'white'}}>Отмена</Text>
 				  	</TouchableOpacity>
 			  	</View>
-
+			  	{!error && input ? <TouchableOpacity style={styles.searchBar} onPress={() => addNewCity(searchRes.name)}>
+			  		<Image style={{width:20,height:20,marginHorizontal:10}} source={require('../img/sun.png')}/>
+				  	<Text>{searchRes.name}</Text>
+				  	<Text style={{position:'absolute',right:20}}>{`+${searchRes.temp}°`}</Text>
+			  	</TouchableOpacity> : null}
 			</View>
 		</Modal>
 
@@ -150,6 +176,15 @@ const styles = StyleSheet.create({
 		borderRadius:10,
 		fontSize:12,
 		paddingLeft:10,
+	},
+	searchBar: {
+		flexDirection:'row',
+		alignItems:'center',
+		width:220,
+		height:30,
+		backgroundColor:'white',
+		borderRadius:10,
+		marginVertical:5,
 	}
 })
 

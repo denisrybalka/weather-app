@@ -2,9 +2,9 @@ import React from 'react';
 import { Modal, TouchableOpacity ,View, Text, Image, StyleSheet, ImageBackground } from 'react-native'
 
 
-const City = ({weather}) => {
+const City = ({name,weather}) => {
 
-	const {name,temp_max,temp_min,temp} = weather.main;
+	const {temp_max,temp_min,temp} = weather.main;
 
   return (
     <View style={styles.city}>
