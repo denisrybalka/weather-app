@@ -2,10 +2,10 @@ import React from 'react';
 import { Modal, TouchableOpacity ,View, Text, Image, StyleSheet, ImageBackground } from 'react-native'
 import City from './City.js'
 
-const CityList = (props) => {
+const CityList = ({weather}) => {
   return (
     <View style={styles.cityList}>
-  		<City/>
+  		<City weather={weather}/>
   	</View>
   )
 }

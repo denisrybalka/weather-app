@@ -36,12 +36,12 @@ const Header = ({weather}) => {
 			  	{!showInput ? <Text style={styles.modalText}>Управление городами</Text> :
 			  	<View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:20}}>
 			  		<TextInput style={styles.input} placeholder="Введите город" autoFocus/>
-				  	<TouchableOpacity onPress={() => setShowInput(false)}>
-					  	<Text style={styles.cancel}>Отмена</Text>
+				  	<TouchableOpacity style={{padding: 5,}} onPress={() => setShowInput(false)}>
+					  	<Text style={{color:'white'}}>Отмена</Text>
 				  	</TouchableOpacity>
 			  	</View>}
 
-			  	<CityList/>
+			  	<CityList weather={weather}/>
 			  	<TouchableOpacity style={styles.addCity} onPress={() => setShowInput(true)}>
 			  		<Image style={{}} source={require('../img/plus.png')}/>
 			  	</TouchableOpacity>
@@ -90,7 +90,9 @@ const styles = StyleSheet.create({
 		width:70,
 		height:70,
 		position:'absolute',
-		paddingLeft:5,
+		left:0,
+		top:0,
+		paddingLeft:15,
 		paddingTop:30,
 	},
 	back: {
@@ -99,6 +101,8 @@ const styles = StyleSheet.create({
 		position:'absolute',
 		paddingLeft:15,
 		paddingTop:10,
+		left: 0,
+		top:0,
 	},
 	modalText: {
 		textAlign:'center',
@@ -126,10 +130,6 @@ const styles = StyleSheet.create({
 		borderRadius:10,
 		fontSize:12,
 		paddingLeft:10,
-	},
-	cancel: {
-		marginLeft:5,
-		color:'white',
 	}
 })
 

@@ -2,18 +2,21 @@ import React from 'react';
 import { Modal, TouchableOpacity ,View, Text, Image, StyleSheet, ImageBackground } from 'react-native'
 
 
-const City = (props) => {
+const City = ({weather}) => {
+
+	const {name,temp_max,temp_min,temp} = weather.main;
+
   return (
     <View style={styles.city}>
    		<Image style={{width:20,height:20,marginHorizontal:15}} source={require('../img/sun.png')}/>
    		<View>
 	   		<View style={{flexDirection:'row'}}>
-		    	<Text style={styles.cityText}>Киев</Text>
+		    	<Text style={styles.cityText}>{name}</Text>
 		   		<Image source={require('../img/marker.png')}/>
 	   		</View>
-	   		<Text style={styles.degreeText}>+26° / +19°</Text>
+	   		<Text style={styles.degreeText}>{`${Math.ceil(temp_max)}° / ${Math.ceil(temp_min)}°`}</Text>
    		</View>
-   		<Text style={styles.degree}>+25°</Text>
+   		<Text style={styles.degree}>{`${Math.ceil(temp)}`}°</Text>
     </View>
   )
 }
