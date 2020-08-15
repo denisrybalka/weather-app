@@ -1,9 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import { Modal, TouchableOpacity, View, Text, Image, StyleSheet,TextInput,StatusBar,BackHandler,Alert } from 'react-native'
+
 import CityList from './CityList.js';
+import {setImg} from '../res/img.js'
+import {isDay} from '../res/date.js'
 
 
-const Header = ({weather,cityList,addNewCity}) => {
+const Header = ({weather}) => {
 	const [modal,setModal] = useState(false);
 	const [input,setInput] = useState('');
 	const [showInput, setShowInput] = useState(false);
@@ -18,17 +21,21 @@ const Header = ({weather,cityList,addNewCity}) => {
 	    		return data.json()
 	    	} return 0;
 	    })
-	     .then(results => {
-     		if (results) {
-     			setError(false);
-     			setSearch({
-     				name: results.name,
-     				temp: Math.ceil(results.main.temp),
-     			})
-     		} else {
-     			setError(true);
-     		}
-	     });
+	    .then(results => {
+	 		if (results) {
+	 			setError(false);
+
+	 			setSearch({
+		 			name: results.name,
+		 			temp: results.main.temp,
+		            temp_max: results.main.temp_max,
+		            temp_min: results.main.temp_min,
+	 			})
+
+	 		} else {
+	 			setError(true);
+	 		}
+	    });
 	}
 
   return (
@@ -39,7 +46,7 @@ const Header = ({weather,cityList,addNewCity}) => {
 	  	</TouchableOpacity>
 	  	: null}
 
-		<Image style={styles.image} source={require('../img/sun.png')}/>
+		<Image style={styles.image} source={setImg(weather.main.icon)}/>
 		<View>
 			<Text style={styles.mood}>{weather.main.weather}</Text>
 			<View style={{width:40,height:5,backgroundColor:'white',alignSelf:'center'}}></View>
@@ -57,7 +64,7 @@ const Header = ({weather,cityList,addNewCity}) => {
 
 			  	<Text style={styles.modalText}>Управление городами</Text>
 
-			  	<CityList weather={weather} cityList={cityList}/>
+			  	<CityList weather={weather}/>
 
 			  	<TouchableOpacity style={styles.addCity} onPress={() => setShowInput(true)}>
 			  		<Image style={{}} source={require('../img/plus.png')}/>
@@ -82,14 +89,14 @@ const Header = ({weather,cityList,addNewCity}) => {
 			  			onChangeText={(text) => search(text)}
 			  		/>
 
-				  	<TouchableOpacity style={{padding: 5,}} onPress={() => setInput('')}>
+				  	<TouchableOpacity style={{padding: 5,}} onPress={() => setShowInput(false)}>
 					  	<Text style={{color:'white'}}>Отмена</Text>
 				  	</TouchableOpacity>
 			  	</View>
-			  	{!error && input ? <TouchableOpacity style={styles.searchBar} onPress={() => addNewCity(searchRes.name)}>
+			  	{!error && input ? <TouchableOpacity style={styles.searchBar}>
 			  		<Image style={{width:20,height:20,marginHorizontal:10}} source={require('../img/sun.png')}/>
 				  	<Text>{searchRes.name}</Text>
-				  	<Text style={{position:'absolute',right:20}}>{`+${searchRes.temp}°`}</Text>
+				  	<Text style={{position:'absolute',right:20}}>{`+${Math.ceil(searchRes.temp)}°`}</Text>
 			  	</TouchableOpacity> : null}
 			</View>
 		</Modal>
@@ -98,8 +105,8 @@ const Header = ({weather,cityList,addNewCity}) => {
   )
 }
 
-const COLORS = ['#A8CEF0','#AAA8F0','#F0A8B9','#F0B9A8','#B2F0A8','#A8F0C1','#A8E7F0',
-				'#BFA8F0'];
+const COLORS = !isDay ? ['#A8CEF0','#AAA8F0','#F0A8B9','#F0B9A8','#B2F0A8','#A8F0C1','#A8E7F0',
+				'#BFA8F0'] : ['#274065','#4D2765'];
 
 const rnd = Math.floor(Math.random() * COLORS.length);
 const color = COLORS[rnd];

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Modal, TouchableOpacity ,View, Text, Image, StyleSheet, ImageBackground } from 'react-native'
+import {setImg} from '../res/img.js'
 
+const City = ({weather}) => {
 
-const City = ({name,weather}) => {
-
-	const {temp_max,temp_min,temp} = weather.main;
+	const {name,temp_max,temp_min,temp,icon} = weather.main;
 
   return (
     <View style={styles.city}>
-   		<Image style={{width:20,height:20,marginHorizontal:15}} source={require('../img/sun.png')}/>
+   		<Image style={{width:20,height:20,marginHorizontal:15}} source={setImg(icon)}/>
    		<View>
 	   		<View style={{flexDirection:'row'}}>
 		    	<Text style={styles.cityText}>{name}</Text>

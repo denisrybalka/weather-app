@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, ScrollView, Image, StatusBar, View, Modal, Button} from "react-native";
+import { Text, StyleSheet, ScrollView, Image, StatusBar, View, Button} from "react-native";
+import Spinner from 'react-native-loading-spinner-overlay'
 
 import Header from './src/screens/Header.js';
 import Main from './src/screens/Main.js';
@@ -12,6 +13,7 @@ import Constants from 'expo-constants'
 class App extends React.Component {
 
   state = {
+    isLoading: true,
     weather: {
       lat: null,
       lon: null,
@@ -25,54 +27,47 @@ class App extends React.Component {
         temp_max: null,
         temp_min: null,
         wind: null,
+        icon: null,
       },
       daily: [],
-    },
-    cityList: [],
+    }
   }
+
 
   componentDidMount() {
-    this.getWeather();
+    this.getWeather("Киев");
   }
 
-  addNewCity = (city) => {
-    this.setState((state) => {
-      return {
-        ...state,
-        cityList: [...state.cityList, city],
-      }
-    })
-  }
-
-  async getWeather() {
-    await fetch('https://api.openweathermap.org/data/2.5/weather?q=Киев&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09')
+  async getWeather(name) {
+    await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${name}&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09`)
     .then(data => data.json())
       .then(results => {
         this.setState((state) => {
           return {
             ...state,
             weather: {
-            id: results.dt, 
-            lat: results.coord.lat,
-            lon: results.coord.lon,
-            main: {
-              name: results.name,
-              weather: results.weather[0].description,
-              temp: results.main,
-              humidity: results.main.humidity,
-              pressure: results.main.pressure,
-              temp: results.main.temp,
-              temp_max: results.main.temp_max,
-              temp_min: results.main.temp_min,
-              wind: results.wind.speed,
+              id: results.dt, 
+              lat: results.coord.lat,
+              lon: results.coord.lon,
+              main: {
+                name: results.name,
+                weather: results.weather[0].description,
+                temp: results.main,
+                humidity: results.main.humidity,
+                pressure: results.main.pressure,
+                temp: results.main.temp,
+                temp_max: results.main.temp_max,
+                temp_min: results.main.temp_min,
+                wind: results.wind.speed,
+                icon: results.weather[0].icon,
+              }
             }
-          },
-          cityList: [results.name]
           }
         })
+        this.setState({isLoading:false})
       })
 
-    await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.weather.lat}&lon=${this.state.weather.lon}&lang=ru&units=metric&exclude=minutely,hourly&appid=f937e142b7a3df602830e9a106d4df09`)
+    await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.weather.lat}&lon=${this.state.weather.lon}&lang=ru&units=metric&exclude=hourly,minutely&appid=f937e142b7a3df602830e9a106d4df09`)
       .then(data => data.json())
       .then(results => {
         const newWeather = results.daily.map(el => {
@@ -98,16 +93,21 @@ class App extends React.Component {
     return (
     <ScrollView style={styles.container}>
       <StatusBar translucent backgroundColor='transparent'/>
-      <View>
-        <Header
-          weather={this.state.weather}
-          cityList={this.state.cityList}
-          addNewCity={this.addNewCity}
+
+        <View>
+          <Header weather={this.state.weather}/>
+          <Main weather={this.state.weather}/>
+          <Info weather={this.state.weather.main}/>
+          <Weather weather={this.state.weather.daily}/>
+        </View>
+
+        <Spinner
+          visible={this.state.isLoading}
+          textContent={'Получение данных о погоде...'}
+          textStyle={{color: 'white',fontSize:16}}
+          animation='fade'
         />
-        <Main weather={this.state.weather}/>
-        <Info weather={this.state.weather.main}/>
-        <Weather weather={this.state.weather.daily}/>
-      </View>
+
     </ScrollView>
     )
   }

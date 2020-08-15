@@ -1,10 +1,12 @@
 import React from 'react';
 import {Text, StyleSheet, View, Image} from "react-native";
+import {setImg} from '../res/img.js';
 
-const WeatherItem = ({image,date,desc,temp}) => {
+const WeatherItem = ({icon,date,desc,temp}) => {
+
   return (
     <View style={styles.item}>
-    	<Image style={styles.image} source={image}/>
+    	<Image style={styles.image} source={setImg(icon)}/>
     	<Text style={styles.text}>{`${date} • `}</Text>
     	<Text style={styles.text}>{desc}</Text>
     	<Text style={styles.temp}>{`${temp}°`}</Text>

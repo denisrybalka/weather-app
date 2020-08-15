@@ -1,15 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native'
+import {DATE} from '../res/date.js'
 
 const Main = ({weather}) => {
 
-	const date = new Date();
-	const month = ["Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сен", "Окт", "Ноя", "Дек"];
-  	const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота','Воскресенье'];
+  const month = ["Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сен", "Окт", "Ноя", "Дек"];
+  const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота','Воскресенье'];
+  
+  const showDay = DATE.getDay();
+  const showMonth = month[DATE.getMonth()];
+  const showHours = DATE.getHours();
+  const showMin = DATE.getMinutes();
+
+  const showDate = `${days[showDay]}  |  ${showMonth} ${showDay}  |  ${showHours}:${showMin.length === 1 ? '0' + showMin : showMin}`
+
   return (
     <View style={styles.main}>
   		<Text style={styles.city}>{weather.main.name}</Text>
-  		<Text style={styles.date}>{`${days[date.getDay()]}  |  ${month[date.getMonth()]} ${date.getDate()}  |  ${date.getHours()}:${date.getMinutes()}`}</Text>
+  		<Text style={styles.date}>{showDate}</Text>
   		<Text style={styles.mainDegree}>{`${Math.ceil(weather.main.temp)}°`}</Text>
   		<View style={styles.tempBlock}>
   			<View>

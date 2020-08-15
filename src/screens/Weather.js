@@ -15,7 +15,7 @@ const Weather = ({weather}) => {
   			data++
 	  		return (
 				<WeatherItem
-		  			image={require('../img/cloudy.png')}
+		  			icon={el.icon}
 		  			date={days[data]}
 		  			key={el.id}
 		  			desc={el.description}
