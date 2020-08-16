@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import { Modal, TouchableOpacity ,View, Text, Image, StyleSheet, ImageBackground } from 'react-native'
 import City from './City.js'
 
-const CityList = ({weather}) => {
+const CityList = ({weather,cityList,getWeather}) => {
 
   return (
     <View style={styles.cityList}>
-  		<City weather={weather}/>
+    { cityList.map(el => <City getWeather={getWeather} key={el.id} weather={el}/>)}
   	</View>
   )
 }

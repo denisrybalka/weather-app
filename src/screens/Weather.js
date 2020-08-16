@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {View} from "react-native";
+import {DATE,DAYS} from '../res/date.js'
 
 import WeatherItem from './WeatherItem.js';
 
 const Weather = ({weather}) => {
-
-	const date = new Date();
-	let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ','ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ'];
-	let data = date.getDay();
+	
+  let data = DATE.getDay();
 
   const weatherItemsList = weather ? 
   	weather.map((el,idx) => {
@@ -16,7 +15,7 @@ const Weather = ({weather}) => {
 	  		return (
 				<WeatherItem
 		  			icon={el.icon}
-		  			date={days[data]}
+		  			date={DAYS[data]}
 		  			key={el.id}
 		  			desc={el.description}
 		  			temp={el.temp}

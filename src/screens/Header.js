@@ -5,8 +5,8 @@ import CityList from './CityList.js';
 import {setImg} from '../res/img.js'
 import {isDay} from '../res/date.js'
 
+const Header = ({weather,addNewCity,cityList,getWeather}) => {
 
-const Header = ({weather}) => {
 	const [modal,setModal] = useState(false);
 	const [input,setInput] = useState('');
 	const [showInput, setShowInput] = useState(false);
@@ -30,12 +30,23 @@ const Header = ({weather}) => {
 		 			temp: results.main.temp,
 		            temp_max: results.main.temp_max,
 		            temp_min: results.main.temp_min,
+		            id: results.dt,
 	 			})
 
 	 		} else {
 	 			setError(true);
 	 		}
 	    });
+	}
+
+	const onCityAdded = () => {
+		setInput('');
+		if (cityList.filter(el => el.name === searchRes.name).length > 0) {
+			setShowInput(false);
+			return 0;
+		}
+		addNewCity(searchRes);
+		setShowInput(false);
 	}
 
   return (
@@ -64,7 +75,7 @@ const Header = ({weather}) => {
 
 			  	<Text style={styles.modalText}>Управление городами</Text>
 
-			  	<CityList weather={weather}/>
+			  	<CityList weather={weather} cityList={cityList} getWeather={getWeather}/>
 
 			  	<TouchableOpacity style={styles.addCity} onPress={() => setShowInput(true)}>
 			  		<Image style={{}} source={require('../img/plus.png')}/>
@@ -93,7 +104,7 @@ const Header = ({weather}) => {
 					  	<Text style={{color:'white'}}>Отмена</Text>
 				  	</TouchableOpacity>
 			  	</View>
-			  	{!error && input ? <TouchableOpacity style={styles.searchBar}>
+			  	{!error && input ? <TouchableOpacity style={styles.searchBar} onPress={() => onCityAdded()}>
 			  		<Image style={{width:20,height:20,marginHorizontal:10}} source={require('../img/sun.png')}/>
 				  	<Text>{searchRes.name}</Text>
 				  	<Text style={{position:'absolute',right:20}}>{`+${Math.ceil(searchRes.temp)}°`}</Text>
@@ -135,9 +146,9 @@ const styles = StyleSheet.create({
 	mood: {
 		textTransform: 'uppercase',
 		letterSpacing: 1.5,
-		fontWeight: 'bold',
 		color:"white",
 		marginTop:15,
+		fontWeight:'bold',
 	},
 	menuWrap: {
 		width:70,

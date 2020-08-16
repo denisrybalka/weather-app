@@ -1,18 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native'
-import {DATE} from '../res/date.js'
+import {DATE,MONTH,DAYS} from '../res/date.js'
 
 const Main = ({weather}) => {
 
-  const month = ["Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сен", "Окт", "Ноя", "Дек"];
-  const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота','Воскресенье'];
-  
-  const showDay = DATE.getDay();
-  const showMonth = month[DATE.getMonth()];
+  const showDay = DATE.getDate();
+  const showMonth = MONTH[DATE.getMonth()];
   const showHours = DATE.getHours();
   const showMin = DATE.getMinutes();
 
-  const showDate = `${days[showDay]}  |  ${showMonth} ${showDay}  |  ${showHours}:${showMin.length === 1 ? '0' + showMin : showMin}`
+  const showDate = `${DAYS[DATE.getDay()]}  |  ${showMonth} ${showDay}  |  ${showHours}:${showMin.length === 1 ? '0' + showMin : showMin}`
 
   return (
     <View style={styles.main}>

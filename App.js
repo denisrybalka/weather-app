@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, ScrollView, Image, StatusBar, View, Button} from "react-native";
+import { Text, StyleSheet, ScrollView, Image, StatusBar, View } from "react-native";
 import Spinner from 'react-native-loading-spinner-overlay'
 
 import Header from './src/screens/Header.js';
@@ -13,7 +13,8 @@ import Constants from 'expo-constants'
 class App extends React.Component {
 
   state = {
-    isLoading: true,
+    isLoading: false,
+    cityList: [],
     weather: {
       lat: null,
       lon: null,
@@ -38,13 +39,35 @@ class App extends React.Component {
     this.getWeather("Киев");
   }
 
-  async getWeather(name) {
+  addNewCity = (city) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        cityList: [...state.cityList, city],
+      }
+    })
+  }
+
+  getWeather = async(name) => {
+    this.setState({isLoading:true})
     await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${name}&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09`)
     .then(data => data.json())
       .then(results => {
+        console.log(results);
         this.setState((state) => {
+          let newArray = [...state.cityList];
+          if (!state.cityList.filter(el => el.name === name).length > 0) {
+            newArray = [...state.cityList, {
+                name: results.name,
+                temp: results.main.temp,
+                temp_max: results.main.temp_max,
+                temp_min: results.main.temp_min,
+                id: results.dt,
+              }]
+          }
           return {
             ...state,
+            cityList: newArray,
             weather: {
               id: results.dt, 
               lat: results.coord.lat,
@@ -95,7 +118,12 @@ class App extends React.Component {
       <StatusBar translucent backgroundColor='transparent'/>
 
         <View>
-          <Header weather={this.state.weather}/>
+          <Header
+            weather={this.state.weather}
+            addNewCity={this.addNewCity}
+            cityList={this.state.cityList}
+            getWeather={this.getWeather}
+          />
           <Main weather={this.state.weather}/>
           <Info weather={this.state.weather.main}/>
           <Weather weather={this.state.weather.daily}/>

@@ -2,12 +2,12 @@ import React from 'react';
 import { Modal, TouchableOpacity ,View, Text, Image, StyleSheet, ImageBackground } from 'react-native'
 import {setImg} from '../res/img.js'
 
-const City = ({weather}) => {
+const City = ({weather,getWeather}) => {
 
-	const {name,temp_max,temp_min,temp,icon} = weather.main;
+	const {name,temp_max,temp_min,temp,icon} = weather;
 
   return (
-    <View style={styles.city}>
+    <TouchableOpacity style={styles.city} onPress={() => getWeather(name)}>
    		<Image style={{width:20,height:20,marginHorizontal:15}} source={setImg(icon)}/>
    		<View>
 	   		<View style={{flexDirection:'row'}}>
@@ -17,7 +17,7 @@ const City = ({weather}) => {
 	   		<Text style={styles.degreeText}>{`${Math.ceil(temp_max)}° / ${Math.ceil(temp_min)}°`}</Text>
    		</View>
    		<Text style={styles.degree}>{`${Math.ceil(temp)}`}°</Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 
