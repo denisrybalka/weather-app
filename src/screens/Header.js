@@ -15,6 +15,11 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 
 	async function search(text) {
 		setInput(text);
+
+		if (text.length < 2) {
+			return 0;
+		}
+
 		await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${text}&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09`)
     	.then(data => {
 	    	if (data.ok) {
@@ -31,10 +36,12 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 		            temp_max: results.main.temp_max,
 		            temp_min: results.main.temp_min,
 		            id: results.dt,
+		            icon: results.weather[0].icon,
 	 			})
 
 	 		} else {
 	 			setError(true);
+	 			setSearch({});
 	 		}
 	    });
 	}
@@ -100,12 +107,12 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 			  			onChangeText={(text) => search(text)}
 			  		/>
 
-				  	<TouchableOpacity style={{padding: 5,}} onPress={() => setShowInput(false)}>
+				  	<TouchableOpacity style={{padding: 5}} onPress={() => setShowInput(false)}>
 					  	<Text style={{color:'white'}}>Отмена</Text>
 				  	</TouchableOpacity>
 			  	</View>
-			  	{!error && input ? <TouchableOpacity style={styles.searchBar} onPress={() => onCityAdded()}>
-			  		<Image style={{width:20,height:20,marginHorizontal:10}} source={require('../img/sun.png')}/>
+			  	{!error && input.length > 2 ? <TouchableOpacity style={styles.searchBar} onPress={() => onCityAdded()}>
+			  		<Image style={{width:20,height:20,marginHorizontal:10}} source={setImg(searchRes.icon)}/>
 				  	<Text>{searchRes.name}</Text>
 				  	<Text style={{position:'absolute',right:20}}>{`+${Math.ceil(searchRes.temp)}°`}</Text>
 			  	</TouchableOpacity> : null}
@@ -158,6 +165,7 @@ const styles = StyleSheet.create({
 		top:0,
 		paddingLeft:15,
 		paddingTop:30,
+		zIndex:100,
 	},
 	back: {
 		width:70,
@@ -167,6 +175,7 @@ const styles = StyleSheet.create({
 		paddingTop:10,
 		left: 0,
 		top:0,
+		zIndex:100,
 	},
 	modalText: {
 		textAlign:'center',

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import { Modal, TouchableOpacity ,View, Text, Image, StyleSheet, ImageBackground } from 'react-native'
+import { Modal, TouchableOpacity ,ScrollView, Text, Image, StyleSheet } from 'react-native'
 import City from './City.js'
 
 const CityList = ({weather,cityList,getWeather}) => {
 
   return (
-    <View style={styles.cityList}>
-    { cityList.map(el => <City getWeather={getWeather} key={el.id} weather={el}/>)}
-  	</View>
+    <ScrollView style={styles.cityList}>
+	    { cityList.map(el => <City getWeather={getWeather} key={el.id} weather={el}/>)}
+  	</ScrollView>
   )
 }
 const styles = StyleSheet.create({

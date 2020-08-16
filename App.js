@@ -53,7 +53,6 @@ class App extends React.Component {
     await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${name}&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09`)
     .then(data => data.json())
       .then(results => {
-        console.log(results);
         this.setState((state) => {
           let newArray = [...state.cityList];
           if (!state.cityList.filter(el => el.name === name).length > 0) {
