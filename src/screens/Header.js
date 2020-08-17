@@ -1,9 +1,11 @@
 import React,{useState,useEffect} from 'react';
 import { Modal, TouchableOpacity, View, Text, Image, StyleSheet,TextInput,StatusBar,BackHandler,Alert } from 'react-native'
 
-import CityList from './CityList.js';
-import {setImg} from '../res/img.js'
-import {isDay} from '../res/date.js'
+import ModalCityList from './ModalCityList.js'
+import ModalCitySearch from './ModalCitySearch.js'
+
+import { setImg } from '../res/img.js'
+import { isDay } from '../res/date.js'
 
 const Header = ({weather,addNewCity,cityList,getWeather}) => {
 
@@ -11,7 +13,7 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 	const [input,setInput] = useState('');
 	const [showInput, setShowInput] = useState(false);
 	const [searchRes, setSearch] = useState({});
-	const [error,setError] = useState(false);
+	const [error,setError] = useState(true);
 
 	async function search(text) {
 		setInput(text);
@@ -56,6 +58,14 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 		setShowInput(false);
 	}
 
+	const handleModal = () => {
+		setModal(false);
+	}
+
+	const handleInput = () => {
+		setShowInput(true);
+	}
+
   return (
 	<View style={styles.header}>
 		{ !modal ?
@@ -73,50 +83,24 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 		<Image style={styles.background} source={require('../img/background.png')}/>
 
 		<Modal visible={modal && !showInput} transparent animationType='slide' onRequestClose={() => setModal(false)}>	
-			<View style={{flex:1,backgroundColor:"rgba(77, 77, 77, 0.5)"}}>
-	      		<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
-
-				<TouchableOpacity style={styles.back} onPress={() => setModal(!modal)}>
-			  		<Image source={require('../img/back.png')}/>
-			  	</TouchableOpacity>
-
-			  	<Text style={styles.modalText}>Управление городами</Text>
-
-			  	<CityList weather={weather} cityList={cityList} getWeather={getWeather}/>
-
-			  	<TouchableOpacity style={styles.addCity} onPress={() => setShowInput(true)}>
-			  		<Image style={{}} source={require('../img/plus.png')}/>
-			  	</TouchableOpacity>
-
-			</View>
+			<ModalCityList
+				handleInput={handleInput}
+				handleModal={handleModal}
+				weather={weather}
+				cityList={cityList}
+				getWeather={getWeather}
+			/>
 		</Modal>
 
 		<Modal visible={showInput} transparent animationType='slide' onRequestClose={() => setShowInput(false)}>
-			<View style={{flex:1,backgroundColor:"rgba(77, 77, 77, 0.5)",alignItems:'center'}}>
-				<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
-
-			  	<View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:20}}>
-			  		<Image style={{marginRight:10}} source={require('../img/search.png')}/>
-
-			  		<TextInput
-			  			style={styles.input}
-			  			placeholder="Введите город"
-			  			autoFocus
-			  			value={input}
-			  			maxLength={20}
-			  			onChangeText={(text) => search(text)}
-			  		/>
-
-				  	<TouchableOpacity style={{padding: 5}} onPress={() => setShowInput(false)}>
-					  	<Text style={{color:'white'}}>Отмена</Text>
-				  	</TouchableOpacity>
-			  	</View>
-			  	{!error && input.length > 2 ? <TouchableOpacity style={styles.searchBar} onPress={() => onCityAdded()}>
-			  		<Image style={{width:20,height:20,marginHorizontal:10}} source={setImg(searchRes.icon)}/>
-				  	<Text>{searchRes.name}</Text>
-				  	<Text style={{position:'absolute',right:20}}>{`+${Math.ceil(searchRes.temp)}°`}</Text>
-			  	</TouchableOpacity> : null}
-			</View>
+			<ModalCitySearch
+				search={search}
+				handleInput={handleInput}
+				onCityAdded={onCityAdded}
+				searchRes={searchRes}
+				input={input}
+				error={error}
+			/>
 		</Modal>
 
 	</View>
@@ -167,52 +151,6 @@ const styles = StyleSheet.create({
 		paddingTop:30,
 		zIndex:100,
 	},
-	back: {
-		width:70,
-		height:70,
-		position:'absolute',
-		paddingLeft:15,
-		paddingTop:10,
-		left: 0,
-		top:0,
-		zIndex:100,
-	},
-	modalText: {
-		textAlign:'center',
-		marginTop:10,
-		letterSpacing: 0.5,
-		fontWeight: 'bold',
-		color:"white",
-	},
-	addCity: {
-		position:'absolute',
-		justifyContent:'center',
-		alignItems:'center',
-		bottom:25,
-		right:25,
-		width:50,
-		height:50,
-		backgroundColor:'#c2c2c2',
-		borderRadius:60,
-	},
-	input: {
-		width:190,
-		height:30,
-		alignSelf:'center',
-		backgroundColor:'white',
-		borderRadius:10,
-		fontSize:12,
-		paddingLeft:10,
-	},
-	searchBar: {
-		flexDirection:'row',
-		alignItems:'center',
-		width:220,
-		height:30,
-		backgroundColor:'white',
-		borderRadius:10,
-		marginVertical:5,
-	}
 })
 
 export default Header;
