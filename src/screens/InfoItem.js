@@ -1,7 +1,7 @@
 import React from 'react';
-import { View,Text,Image,StyleSheet  } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
 
-const InfoItem = ({path,label,sign,value}) => {
+const InfoItem = ({ path, label, sign, value }) => {
   return (
     <View style={styles.item}>
     	<Image source={path} style={styles.image}/>
@@ -26,14 +26,12 @@ const styles = StyleSheet.create({
   text: {
   	marginLeft:10,
   	fontWeight: "500",
-  	fontSize: 14,
   	color: "#575757",
   	textTransform: "uppercase",
   	letterSpacing: 1.5,
   },
   value: {
   	fontWeight: "500",
-  	fontSize: 14,
   	color: "#c2c2c2",
   	textTransform: "uppercase",
   	letterSpacing: 1.5,

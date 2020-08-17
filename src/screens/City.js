@@ -1,10 +1,10 @@
 import React from 'react';
-import { Modal, TouchableOpacity ,View, Text, Image, StyleSheet, ImageBackground } from 'react-native'
-import {setImg} from '../res/img.js'
+import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native'
+
+import { setImg } from '../res/img.js'
 
 const City = ({weather,getWeather}) => {
-
-	const {name,temp_max,temp_min,temp,icon} = weather;
+  const { name, temp, temp_max, temp_min, icon } = weather;
 
   return (
     <TouchableOpacity style={styles.city} onPress={() => getWeather(name)}>
@@ -14,9 +14,9 @@ const City = ({weather,getWeather}) => {
 		    	<Text style={styles.cityText}>{name}</Text>
 		   		<Image source={require('../img/marker.png')}/>
 	   		</View>
-	   		<Text style={styles.degreeText}>{`${Math.ceil(temp_max)}° / ${Math.ceil(temp_min)}°`}</Text>
+	   		<Text style={styles.degreeText}>{`${temp_max}° / ${temp_min}°`}</Text>
    		</View>
-   		<Text style={styles.degree}>{`${Math.ceil(temp)}`}°</Text>
+   		<Text style={styles.degree}>{temp}°</Text>
     </TouchableOpacity>
   )
 }

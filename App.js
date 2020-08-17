@@ -1,14 +1,11 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, ScrollView, Image, StatusBar, View } from "react-native";
+import React from "react";
+import { ScrollView, StatusBar, View } from "react-native";
 import Spinner from 'react-native-loading-spinner-overlay'
 
 import Header from './src/screens/Header.js';
 import Main from './src/screens/Main.js';
 import Info from './src/screens/Info.js';
 import Weather from './src/screens/Weather.js';
-import CityManage from './src/screens/CityManage.js';
-
-import Constants from 'expo-constants'
 
 class App extends React.Component {
 
@@ -49,7 +46,7 @@ class App extends React.Component {
   }
 
   getWeather = async(name) => {
-    this.setState({isLoading:true})
+    this.setState({ isLoading:true })
     await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${name}&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09`)
     .then(data => data.json())
       .then(results => {
@@ -58,9 +55,9 @@ class App extends React.Component {
           if (!state.cityList.filter(el => el.name === name).length > 0) {
             newArray = [...state.cityList, {
                 name: results.name,
-                temp: results.main.temp,
-                temp_max: results.main.temp_max,
-                temp_min: results.main.temp_min,
+                temp: Math.ceil(results.main.temp),
+                temp_max: Math.ceil(results.main.temp_max),
+                temp_min: Math.ceil(results.main.temp_min),
                 id: results.dt,
               }]
           }
@@ -74,19 +71,18 @@ class App extends React.Component {
               main: {
                 name: results.name,
                 weather: results.weather[0].description,
-                temp: results.main,
+                temp: Math.ceil(results.main.temp),
                 humidity: results.main.humidity,
                 pressure: results.main.pressure,
-                temp: results.main.temp,
-                temp_max: results.main.temp_max,
-                temp_min: results.main.temp_min,
+                temp_max: Math.ceil(results.main.temp_max),
+                temp_min: Math.ceil(results.main.temp_min),
                 wind: results.wind.speed,
                 icon: results.weather[0].icon,
               }
             }
           }
         })
-        this.setState({isLoading:false})
+        this.setState({ isLoading:false })
       })
 
     await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.weather.lat}&lon=${this.state.weather.lon}&lang=ru&units=metric&exclude=hourly,minutely&appid=f937e142b7a3df602830e9a106d4df09`)
@@ -112,26 +108,30 @@ class App extends React.Component {
   }
 
   render() {
+    const { weather, cityList, isLoading } = this.state;
+    const { main, daily } = this.state.weather;
+    const { addNewCity, getWeather } = this;
+
     return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
       <StatusBar translucent backgroundColor='transparent'/>
 
         <View>
           <Header
-            weather={this.state.weather}
-            addNewCity={this.addNewCity}
-            cityList={this.state.cityList}
-            getWeather={this.getWeather}
+            weather={weather}
+            addNewCity={addNewCity}
+            cityList={cityList}
+            getWeather={getWeather}
           />
-          <Main weather={this.state.weather}/>
-          <Info weather={this.state.weather.main}/>
-          <Weather weather={this.state.weather.daily}/>
+          <Main weather={main}/>
+          <Info weather={main}/>
+          <Weather weather={daily}/>
         </View>
 
         <Spinner
-          visible={this.state.isLoading}
+          visible={isLoading}
           textContent={'Получение данных о погоде...'}
-          textStyle={{color: 'white',fontSize:16}}
+          textStyle={{ color: 'white', fontSize: 16 }}
           animation='fade'
         />
 
@@ -139,12 +139,5 @@ class App extends React.Component {
     )
   }
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-});
 
 export default App;

@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native'
-import {DATE,MONTH,DAYS} from '../res/date.js'
 
-const Main = ({weather}) => {
+import { DATE, MONTH, DAYS } from '../res/date.js'
+
+const Main = ({ weather }) => {
+  const { name, temp, temp_max, temp_min } = weather;
 
   const showDay = DATE.getDate();
   const showMonth = MONTH[DATE.getMonth()];
@@ -13,19 +15,24 @@ const Main = ({weather}) => {
 
   return (
     <View style={styles.main}>
-  		<Text style={styles.city}>{weather.main.name}</Text>
+
+  		<Text style={styles.city}>{name}</Text>
   		<Text style={styles.date}>{showDate}</Text>
-  		<Text style={styles.mainDegree}>{`${Math.ceil(weather.main.temp)}°`}</Text>
+  		<Text style={styles.mainDegree}>{temp}°</Text>
+
   		<View style={styles.tempBlock}>
+
   			<View>
-  				<Text style={styles.temp}>{`+${Math.ceil(weather.main.temp_min)}°`}</Text>
+  				<Text style={styles.temp}>+{temp_min}°</Text>
   				<Text style={styles.tempAfter}>мин.</Text>
   			</View>
   			<View>
-	  			<Text style={styles.temp}>{`+${Math.ceil(weather.main.temp_max)}°`}</Text>
+	  			<Text style={styles.temp}>+{temp_max}°</Text>
 	  			<Text style={styles.tempAfter}>макс.</Text>
   			</View>
+
   		</View>
+
   	</View>
   )
 }
@@ -47,7 +54,6 @@ const styles = StyleSheet.create({
 		textAlign:'center',
 		marginVertical: 30,
 		fontWeight: '500',
-		fontSize: 14,
 		letterSpacing: 1.5,
 		textTransform: 'uppercase',
 		color: '#C2C2C2',

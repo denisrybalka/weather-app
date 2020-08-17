@@ -1,12 +1,11 @@
 import React from 'react';
-import { Modal, TouchableOpacity, View, Text, Image, StyleSheet,TextInput,StatusBar,BackHandler,Alert } from 'react-native'
+import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native'
 
 import CityList from './CityList.js';
 
 const ModalCityList = ({handleModal,handleInput,weather,cityList,getWeather}) => {
   return (
-    <View style={{flex:1,backgroundColor:"rgba(77, 77, 77, 0.5)"}}>
-  		<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
+    <View style={{ flex:1, backgroundColor:"rgba(77, 77, 77, 0.5)" }}>
 
 		<TouchableOpacity style={styles.back} onPress={() => handleModal()}>
 	  		<Image source={require('../img/back.png')}/>
@@ -17,7 +16,7 @@ const ModalCityList = ({handleModal,handleInput,weather,cityList,getWeather}) =>
 	  	<CityList weather={weather} cityList={cityList} getWeather={getWeather}/>
 
 	  	<TouchableOpacity style={styles.addCity} onPress={() => handleInput()}>
-	  		<Image style={{}} source={require('../img/plus.png')}/>
+	  		<Image source={require('../img/plus.png')}/>
 	  	</TouchableOpacity>
 
 	</View>

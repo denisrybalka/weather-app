@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
-import {View} from "react-native";
-import {DATE,DAYS} from '../res/date.js'
+import React from 'react';
+import { View } from "react-native";
 
 import WeatherItem from './WeatherItem.js';
+
+import { DATE, DAYS_SHORTLY } from '../res/date.js'
 
 const Weather = ({weather}) => {
 	
@@ -13,13 +14,13 @@ const Weather = ({weather}) => {
   		if (idx < 5) {
   			data++
 	  		return (
-				<WeatherItem
-		  			icon={el.icon}
-		  			date={DAYS[data]}
-		  			key={el.id}
-		  			desc={el.description}
-		  			temp={el.temp}
-		  		/>
+  				<WeatherItem
+  		  			icon={el.icon}
+  		  			date={DAYS_SHORTLY[data]}
+  		  			key={el.id}
+  		  			desc={el.description}
+  		  			temp={el.temp}
+  		  		/>
 	  		)
   		} else return null;
   	}) : null;

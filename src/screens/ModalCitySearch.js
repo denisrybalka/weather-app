@@ -1,34 +1,37 @@
 import React from 'react';
-import { Modal, TouchableOpacity, View, Text, Image, StyleSheet,TextInput,StatusBar,BackHandler,Alert } from 'react-native'
+import { TouchableOpacity, View, Text, Image, StyleSheet, TextInput } from 'react-native'
 
 import { setImg } from '../res/img.js'
 
-const ModalCitySearch = ({search,handleInput,onCityAdded,searchRes,input,error}) => {
-  return (
-    <View style={{flex:1,backgroundColor:"rgba(77, 77, 77, 0.5)",alignItems:'center'}}>
-		<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
+const ModalCitySearch = ({ search, handleInput, onCityAdded, searchRes, input, error }) => {
+  const { name, temp, icon } = searchRes;
 
-	  	<View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:20}}>
-	  		<Image style={{marginRight:10}} source={require('../img/search.png')}/>
+  return (
+    <View style={{ flex:1, backgroundColor:"rgba(77, 77, 77, 0.5)", alignItems:'center' }}>
+
+	  	<View style={{ flexDirection:'row', alignItems:'center', justifyContent:'center', marginTop:20 }}>
+	  		<Image style={{ marginRight:10 }} source={require('../img/search.png')}/>
 
 	  		<TextInput
 	  			style={styles.input}
 	  			placeholder="Введите город"
 	  			autoFocus
 	  			value={input}
-	  			maxLength={20}
+	  			maxLength={25}
 	  			onChangeText={(text) => search(text)}
 	  		/>
 
-		  	<TouchableOpacity style={{padding: 5}} onPress={() => handleInput(false)}>
+		  	<TouchableOpacity style={{ padding: 5 }} onPress={() => handleInput(false)}>
 			  	<Text style={{color:'white'}}>Отмена</Text>
 		  	</TouchableOpacity>
 	  	</View>
+
 	  	{!error && input.length > 2 ? <TouchableOpacity style={styles.searchBar} onPress={() => onCityAdded()}>
-	  		<Image style={{width:20,height:20,marginHorizontal:10}} source={setImg(searchRes.icon)}/>
-		  	<Text>{searchRes.name}</Text>
-		  	<Text style={{position:'absolute',right:20}}>{`+${Math.ceil(searchRes.temp)}°`}</Text>
+	  		<Image style={{ width:20, height:20, marginHorizontal:10 }} source={setImg(icon)}/>
+		  	<Text>{name}</Text>
+		  	<Text style={{ position:'absolute', right:20 }}>+{temp}°</Text>
 	  	</TouchableOpacity> : null}
+
 	</View>
   )
 }
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
 		backgroundColor:'white',
 		borderRadius:10,
 		marginVertical:5,
-	}
+	},
 })
 
 export default ModalCitySearch;

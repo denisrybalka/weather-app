@@ -1,13 +1,13 @@
-import React,{useState,useEffect} from 'react';
-import { Modal, TouchableOpacity, View, Text, Image, StyleSheet,TextInput,StatusBar,BackHandler,Alert } from 'react-native'
+import React, { useState } from 'react';
+import { Modal, TouchableOpacity, View, Text, Image, StyleSheet, StatusBar } from 'react-native'
 
 import ModalCityList from './ModalCityList.js'
 import ModalCitySearch from './ModalCitySearch.js'
 
 import { setImg } from '../res/img.js'
-import { isDay } from '../res/date.js'
+import { COLORS } from '../res/color.js'
 
-const Header = ({weather,addNewCity,cityList,getWeather}) => {
+const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 
 	const [modal,setModal] = useState(false);
 	const [input,setInput] = useState('');
@@ -34,9 +34,9 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 
 	 			setSearch({
 		 			name: results.name,
-		 			temp: results.main.temp,
-		            temp_max: results.main.temp_max,
-		            temp_min: results.main.temp_min,
+		 			temp: Math.ceil(results.main.temp),
+		            temp_max: Math.ceil(results.main.temp_max),
+		            temp_min: Math.ceil(results.main.temp_min),
 		            id: results.dt,
 		            icon: results.weather[0].icon,
 	 			})
@@ -69,8 +69,8 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
   return (
 	<View style={styles.header}>
 		{ !modal ?
-		<TouchableOpacity visible={false} style={styles.menuWrap} onPress={() => setModal(!modal)}>
-	  		<Image hidden={true} source={require('../img/menu.png')}/>
+		<TouchableOpacity style={styles.menuWrap} onPress={() => setModal(!modal)}>
+	  		<Image source={require('../img/menu.png')}/>
 	  	</TouchableOpacity>
 	  	: null}
 
@@ -83,6 +83,9 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 		<Image style={styles.background} source={require('../img/background.png')}/>
 
 		<Modal visible={modal && !showInput} transparent animationType='slide' onRequestClose={() => setModal(false)}>	
+			
+  			<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
+
 			<ModalCityList
 				handleInput={handleInput}
 				handleModal={handleModal}
@@ -93,6 +96,9 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 		</Modal>
 
 		<Modal visible={showInput} transparent animationType='slide' onRequestClose={() => setShowInput(false)}>
+
+	  		<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
+
 			<ModalCitySearch
 				search={search}
 				handleInput={handleInput}
@@ -106,9 +112,6 @@ const Header = ({weather,addNewCity,cityList,getWeather}) => {
 	</View>
   )
 }
-
-const COLORS = !isDay ? ['#A8CEF0','#AAA8F0','#F0A8B9','#F0B9A8','#B2F0A8','#A8F0C1','#A8E7F0',
-				'#BFA8F0'] : ['#274065','#4D2765'];
 
 const rnd = Math.floor(Math.random() * COLORS.length);
 const color = COLORS[rnd];
