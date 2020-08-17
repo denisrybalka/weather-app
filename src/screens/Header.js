@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SvgXml } from "react-native-svg";
 import { Modal, TouchableOpacity, View, Text, Image, StyleSheet, StatusBar } from 'react-native'
 
 import ModalCityList from './ModalCityList.js'
@@ -6,6 +7,7 @@ import ModalCitySearch from './ModalCitySearch.js'
 
 import { setImg } from '../res/img.js'
 import { COLORS } from '../res/color.js'
+import { background } from '../res/background.js'
 
 const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 
@@ -80,7 +82,7 @@ const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 			<View style={{width:40,height:5,backgroundColor:'white',alignSelf:'center'}}></View>
 		</View>
 		<Image style={styles.image} source={require('../img/cloud.png')}/>
-		<Image style={styles.background} source={require('../img/background.png')}/>
+		<SvgXml xml={background} position='absolute' top={125} left={0} width='100%' height='100%'/>
 
 		<Modal visible={modal && !showInput} transparent animationType='slide' onRequestClose={() => setModal(false)}>	
 			
