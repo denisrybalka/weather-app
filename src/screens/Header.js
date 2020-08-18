@@ -76,7 +76,7 @@ const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 	  	</TouchableOpacity>
 	  	: null}
 
-		<Image style={styles.image} source={setImg(weather.main.icon)}/>
+	  	<Image style={styles.image} source={setImg(weather.main.icon, true)}/>
 		<View>
 			<Text style={styles.mood}>{weather.main.weather}</Text>
 			<View style={{width:40,height:5,backgroundColor:'white',alignSelf:'center'}}></View>

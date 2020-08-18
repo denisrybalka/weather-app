@@ -8,18 +8,18 @@ const Info = ({ weather }) => {
     <View style={style.infoBlock}>
 
     	<InfoItem
-    		path={require('../img/umbrella.png')}
-    		label="Вероятность осадков"
-    		sign=", %  | "
-    		value={weather.humidity}
-    	/>
-
-    	<InfoItem
     		path={require('../img/humidity.png')}
     		label="Влажность"
     		sign=", %  | "
     		value={weather.humidity}
     	/>
+
+        <InfoItem
+            path={require('../img/umbrella.png')}
+            label="Вероятность осадков"
+            sign=", %  | "
+            value={weather.humidity}
+        />
 
     	<InfoItem
     		path={require('../img/windy.png')}
@@ -29,7 +29,7 @@ const Info = ({ weather }) => {
     	/>
 
     	<InfoItem
-    		path={require('../img/foog.png')}
+    		path={require('../img/pressure.png')}
     		label="Давление"
     		sign=", мм  | "
     		value={weather.pressure}

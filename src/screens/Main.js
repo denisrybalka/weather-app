@@ -12,8 +12,8 @@ const Main = ({ weather, hourly }) => {
   const showMonth = MONTH[date.getMonth()];
   const hour = date.getHours();
   const minutes = DATE.getMinutes();
+  const time = minutes < 10 ? `${hour}:0${minutes}` : `${hour}:${minutes}`;
 
-  const time = minutes.length < 2 ? `${hour}:0${minutes}` : `${hour}:${minutes}`;
   const showDate = `${DAYS[date.getDay()]}  |  ${showMonth} ${showDay}  | ${time}`;
 
   return (
