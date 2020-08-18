@@ -28,9 +28,9 @@ class App extends React.Component {
         icon: null,
       },
       daily: [],
+      hourly: [],
     }
   }
-
 
   componentDidMount() {
     this.getWeather("Киев");
@@ -50,6 +50,7 @@ class App extends React.Component {
     await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${name}&lang=ru&units=metric&appid=f937e142b7a3df602830e9a106d4df09`)
     .then(data => data.json())
       .then(results => {
+        console.log(results)
         this.setState((state) => {
           let newArray = [...state.cityList];
           if (!state.cityList.filter(el => el.name === name).length > 0) {
@@ -58,14 +59,14 @@ class App extends React.Component {
                 temp: Math.ceil(results.main.temp),
                 temp_max: Math.ceil(results.main.temp_max),
                 temp_min: Math.ceil(results.main.temp_min),
-                id: results.dt,
+                id: results.id,
               }]
           }
           return {
             ...state,
             cityList: newArray,
             weather: {
-              id: results.dt, 
+              id: results.id, 
               lat: results.coord.lat,
               lon: results.coord.lon,
               main: {
@@ -78,6 +79,8 @@ class App extends React.Component {
                 temp_min: Math.ceil(results.main.temp_min),
                 wind: results.wind.speed,
                 icon: results.weather[0].icon,
+                timezone: results.timezone,
+                dt: results.dt,
               }
             }
           }
@@ -85,12 +88,21 @@ class App extends React.Component {
         this.setState({ isLoading:false })
       })
 
-    await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.weather.lat}&lon=${this.state.weather.lon}&lang=ru&units=metric&exclude=hourly,minutely&appid=f937e142b7a3df602830e9a106d4df09`)
+    await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.weather.lat}&lon=${this.state.weather.lon}&lang=ru&units=metric&exclude=minutely&appid=f937e142b7a3df602830e9a106d4df09`)
       .then(data => data.json())
       .then(results => {
-        const newWeather = results.daily.map(el => {
+        console.log(results)
+        const dailyWeather = results.daily.map(el => {
           return {
             temp: Math.ceil(el.temp.max),
+            description: el.weather[0].description,
+            icon: el.weather[0].icon,
+            id: el.dt,
+          }
+        })
+        const hourlyWeather = results.hourly.map(el => {
+          return {
+            temp: Math.ceil(el.temp),
             description: el.weather[0].description,
             icon: el.weather[0].icon,
             id: el.dt,
@@ -100,7 +112,8 @@ class App extends React.Component {
             return {
               weather: {
                 ...weather,
-                daily: newWeather,
+                daily: dailyWeather,
+                hourly: hourlyWeather,
               },
             }
           })
@@ -109,7 +122,7 @@ class App extends React.Component {
 
   render() {
     const { weather, cityList, isLoading } = this.state;
-    const { main, daily } = this.state.weather;
+    const { main, daily, hourly } = this.state.weather;
     const { addNewCity, getWeather } = this;
 
     return (
@@ -123,7 +136,10 @@ class App extends React.Component {
             cityList={cityList}
             getWeather={getWeather}
           />
-          <Main weather={main}/>
+          <Main
+            weather={main}
+            hourly={hourly}
+          />
           <Info weather={main}/>
           <Weather weather={daily}/>
         </View>

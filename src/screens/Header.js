@@ -10,7 +10,7 @@ import { COLORS } from '../res/color.js'
 import { background } from '../res/background.js'
 
 const Header = ({ weather, addNewCity, cityList, getWeather }) => {
-
+	
 	const [modal,setModal] = useState(false);
 	const [input,setInput] = useState('');
 	const [showInput, setShowInput] = useState(false);
@@ -39,7 +39,7 @@ const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 		 			temp: Math.ceil(results.main.temp),
 		            temp_max: Math.ceil(results.main.temp_max),
 		            temp_min: Math.ceil(results.main.temp_min),
-		            id: results.dt,
+		            id: results.id,
 		            icon: results.weather[0].icon,
 	 			})
 
