@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native'
 import HourlyWeather from './HourlyWeather'
 
-import { MONTH, DAYS } from '../res/date.js'
+import { DATE, MONTH, DAYS } from '../res/date.js'
 
 const Main = ({ weather, hourly }) => {
   const { name, temp, temp_max, temp_min, timezone, dt } = weather;
@@ -11,9 +11,10 @@ const Main = ({ weather, hourly }) => {
   const showDay = date.getDate();
   const showMonth = MONTH[date.getMonth()];
   const hour = date.getHours();
-  const minutes = date.getMinutes();
+  const minutes = DATE.getMinutes();
 
-  const showDate = `${DAYS[date.getDay()]}  |  ${showMonth} ${showDay}  | ${hour}:${minutes}`
+  const time = minutes.length < 2 ? `${hour}:0${minutes}` : `${hour}:${minutes}`;
+  const showDate = `${DAYS[date.getDay()]}  |  ${showMonth} ${showDay}  | ${time}`;
 
   return (
     <View style={styles.main}>

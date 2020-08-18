@@ -10,13 +10,11 @@ const HourlyWeatherItem = ({weather,timezone}) => {
   const hour = date.getHours();
 
   return (
-    <View style={{ alignItems:'center', justifyContent: 'center', marginHorizontal:25 }}>
-		<Text>{hour}:00</Text>
-		<Text style={{ marginVertical:10}}>{temp}°</Text>
-		<View style={{ flexDirection:'row', justifyContent:'center', alignItems:'center' }}>
-			<Image style={{ width:20, height:20 }} source={setImg(icon)}/>
-			<Text style={{ marginHorizontal:5, maxWidth:100, textAlign:'center' }}>{description}</Text>
-		</View>
+    <View style={{ alignItems:'center', marginHorizontal:15 }}>
+		<Text style={{ fontSize: 10, color:"#c2c2c2", fontWeight:'700', marginBottom: 5, }}>{hour}:00</Text>
+		<Text style={{ fontSize: 18, }}>{temp}°</Text>
+		<Image style={{ width:20, height:20, marginVertical:10, }} source={setImg(icon)}/>
+		<Text style={{ fontSize:10, color:"#575757", marginHorizontal:5, maxWidth:75, textAlign:'center' }}>{description}</Text>
 	</View>
   )
 }
