@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, View, Image } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import SetImage from '../res/SetImage.js';
 
 const WeatherItem = ({ icon, date, desc, temp }) => {

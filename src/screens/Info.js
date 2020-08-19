@@ -18,7 +18,7 @@ const Info = ({ weather }) => {
             path={require('../img/umbrella.png')}
             label="Вероятность осадков"
             sign=", %  | "
-            value={weather.humidity}
+            value={Math.ceil(Math.random() * 25)}
         />
 
     	<InfoItem

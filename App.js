@@ -43,12 +43,12 @@ class App extends React.Component {
           let newArray = [...state.cityList];
           if (!state.cityList.filter(el => el.name === name).length > 0) {
             newArray = [...state.cityList, {
-                name: results.name,
-                temp: Math.ceil(results.main.temp),
-                temp_max: Math.ceil(results.main.temp_max),
-                temp_min: Math.ceil(results.main.temp_min),
-                id: results.id,
-              }]
+              name: results.name,
+              temp: Math.ceil(results.main.temp),
+              temp_max: Math.ceil(results.main.temp_max),
+              temp_min: Math.ceil(results.main.temp_min),
+              id: results.id,
+            }]
           }
           return {
             ...state,
@@ -96,14 +96,14 @@ class App extends React.Component {
           }
         })
         this.setState(({weather}) => {
-            return {
-              weather: {
-                ...weather,
-                daily: dailyWeather,
-                hourly: hourlyWeather,
-              },
-            }
-          })
+          return {
+            weather: {
+              ...weather,
+              daily: dailyWeather,
+              hourly: hourlyWeather,
+            },
+          }
+        })
       })
   }
 

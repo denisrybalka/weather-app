@@ -77,15 +77,17 @@ const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 
 	  	
 	  	<SetImage icon={weather.main.icon} width={50} height={50}/>
+
 		<View>
 			<Text style={styles.mood}>{weather.main.weather}</Text>
 			<View style={{width:40,height:5,backgroundColor:'white',alignSelf:'center'}}></View>
 		</View>
+
 		<Image style={styles.image} source={require('../img/cloud.png')}/>
+
 		<SvgXml xml={background} position='absolute' top={125} left={0} width='100%' height='100%'/>
 
 		<Modal visible={modal && !showInput} transparent animationType='slide' onRequestClose={() => setModal(false)}>	
-			
   			<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
 
 			<ModalCityList
@@ -98,8 +100,7 @@ const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 		</Modal>
 
 		<Modal visible={showInput} transparent animationType='slide' onRequestClose={() => setShowInput(false)}>
-
-	  		<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
+			<StatusBar translucent backgroundColor="rgba(77, 77, 77, 0.5)"/>
 
 			<ModalCitySearch
 				search={search}

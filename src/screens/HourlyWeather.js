@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native'
 
 import HourlyWeatherItem from './HourlyWeatherItem.js'
 
-const HourlyWeather = ({hourly,timezone}) => {
+const HourlyWeather = ({ hourly, timezone }) => {
   
   const hourlyItems = hourly ? hourly.map((el,idx) => idx<10 ? <HourlyWeatherItem timezone={timezone} key={el.id} weather={el}/> : null) : null;
 
