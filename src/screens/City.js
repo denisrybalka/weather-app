@@ -1,14 +1,14 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native'
 
-import { setImg } from '../res/img.js'
+import SetImage from '../res/SetImage.js';
 
-const City = ({weather,getWeather}) => {
+const City = ({ weather, getWeather }) => {
   const { name, temp, temp_max, temp_min, icon } = weather;
 
   return (
     <TouchableOpacity style={styles.city} onPress={() => getWeather(name)}>
-   		<Image style={{width:20,height:20,marginHorizontal:15}} source={setImg(icon)}/>
+   		<SetImage width={20} height={20} marginHorizontal={20} icon={icon}/>
    		<View>
 	   		<View style={{flexDirection:'row'}}>
 		    	<Text style={styles.cityText}>{name}</Text>

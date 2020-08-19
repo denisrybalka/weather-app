@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native'
+
 import HourlyWeather from './HourlyWeather'
 
 import { DATE, MONTH, DAYS } from '../res/date.js'

@@ -4,10 +4,10 @@ import { Modal, TouchableOpacity, View, Text, Image, StyleSheet, StatusBar } fro
 
 import ModalCityList from './ModalCityList.js'
 import ModalCitySearch from './ModalCitySearch.js'
+import SetImage from '../res/SetImage.js'
 
-import { setImg } from '../res/img.js'
 import { COLORS } from '../res/color.js'
-import { background } from '../res/background.js'
+import { background } from '../res/svg-s.js'
 
 const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 	
@@ -76,7 +76,8 @@ const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 	  	</TouchableOpacity>
 	  	: null}
 
-	  	<Image style={styles.image} source={setImg(weather.main.icon, true)}/>
+	  	
+	  	<SetImage icon={weather.main.icon} width={50} height={50}/>
 		<View>
 			<Text style={styles.mood}>{weather.main.weather}</Text>
 			<View style={{width:40,height:5,backgroundColor:'white',alignSelf:'center'}}></View>

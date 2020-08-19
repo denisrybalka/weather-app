@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, Image, StyleSheet, TextInput } from 'react-native'
 
-import { setImg } from '../res/img.js'
+import SetImage from '../res/SetImage.js'
 
 const ModalCitySearch = ({ search, handleInput, onCityAdded, searchRes, input, error }) => {
   const { name, temp, icon } = searchRes;
@@ -27,7 +27,7 @@ const ModalCitySearch = ({ search, handleInput, onCityAdded, searchRes, input, e
 	  	</View>
 
 	  	{!error && input.length > 2 ? <TouchableOpacity style={styles.searchBar} onPress={() => onCityAdded()}>
-	  		<Image style={{ width:20, height:20, marginHorizontal:10 }} source={setImg(icon)}/>
+	  		<SetImage width={20} height={20} icon={icon} marginHorizontal={10}/>
 		  	<Text>{name}</Text>
 		  	<Text style={{ position:'absolute', right:20 }}>+{temp}°</Text>
 	  	</TouchableOpacity> : null}
