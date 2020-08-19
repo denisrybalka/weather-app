@@ -14,7 +14,7 @@ const HourlyWeatherItem = ({ weather, timezone }) => {
   		<Text style={{ fontSize: 10, color:"#c2c2c2", fontWeight:'700', marginBottom: 5, }}>{hour}:00</Text>
   		<Text style={{ fontSize: 18, marginBottom: 10, }}>{temp}°</Text>
   		<SetImage icon={icon} width={20} height={20}/>
-  		<Text style={{ fontSize:10, color:"#575757", marginHorizontal:5, marginTop: 10, textAlign:'center', width:100 }}>{description}</Text>
+  		<Text style={{ fontSize:10, color:"#575757", marginHorizontal:5, marginTop: 10, textAlign:'center', width:80 }}>{description}</Text>
   	</View>
   )
 }

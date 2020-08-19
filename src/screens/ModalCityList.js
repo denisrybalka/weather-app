@@ -13,7 +13,7 @@ const ModalCityList = ({handleModal,handleInput,weather,cityList,getWeather}) =>
 
 	  	<Text style={styles.modalText}>Управление городами</Text>
 
-	  	<CityList weather={weather} cityList={cityList} getWeather={getWeather}/>
+	  	<CityList handleModal={handleModal} weather={weather} cityList={cityList} getWeather={getWeather}/>
 
 	  	<TouchableOpacity style={styles.addCity} onPress={() => handleInput()}>
 	  		<Image source={require('../img/plus.png')}/>

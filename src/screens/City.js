@@ -3,11 +3,16 @@ import { TouchableOpacity, View, Text, Image, StyleSheet } from 'react-native'
 
 import SetImage from '../res/SetImage.js';
 
-const City = ({ weather, getWeather }) => {
+const City = ({ weather, getWeather, handleModal }) => {
   const { name, temp, temp_max, temp_min, icon } = weather;
 
+  const onCityPress = () => {
+  	getWeather(name)
+  	handleModal(false)
+  }
+
   return (
-    <TouchableOpacity style={styles.city} onPress={() => getWeather(name)}>
+    <TouchableOpacity style={styles.city} onPress={() => onCityPress()}>
    		<SetImage width={20} height={20} marginHorizontal={20} icon={icon}/>
    		<View>
 	   		<View style={{flexDirection:'row'}}>

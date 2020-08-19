@@ -31,7 +31,6 @@ const ModalCitySearch = ({ search, handleInput, onCityAdded, searchRes, input, e
 		  	<Text>{name}</Text>
 		  	<Text style={{ position:'absolute', right:20 }}>+{temp}°</Text>
 	  	</TouchableOpacity> : null}
-
 	</View>
   )
 }

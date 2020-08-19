@@ -45,7 +45,6 @@ const Header = ({ weather, addNewCity, cityList, getWeather }) => {
 
 	 		} else {
 	 			setError(true);
-	 			setSearch({});
 	 		}
 	    });
 	}

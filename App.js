@@ -65,7 +65,7 @@ class App extends React.Component {
                 pressure: results.main.pressure,
                 temp_max: Math.ceil(results.main.temp_max),
                 temp_min: Math.ceil(results.main.temp_min),
-                wind: results.wind.speed,
+                wind: Math.ceil(results.wind.speed),
                 icon: results.weather[0].icon,
                 timezone: results.timezone,
                 dt: results.dt,
