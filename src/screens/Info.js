@@ -13,6 +13,7 @@ const Info = ({ weather }) => {
     		sign=", %  | "
     		value={weather.humidity}
     	/>
+        
 
         <InfoItem
             path={require('../img/umbrella.png')}

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Погода от Дениса",
+    "name": "Погода",
     "slug": "weather-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#00C3FF"
+      "backgroundColor": "#34C1FB"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

@@ -13,6 +13,9 @@ const Weather = ({weather}) => {
   	weather.map((el,idx) => {
   		if (idx < 5) {
   			data++
+        if (data > 6) {
+          data = 0;
+        }
 	  		return (
   				<WeatherItem
   		  			icon={el.icon}
